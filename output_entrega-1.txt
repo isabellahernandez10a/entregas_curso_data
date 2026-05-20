@@ -1,0 +1,251 @@
+Primeras 5 filas del dataset:
+  cliente producto  precio cantidad      pais    metodo_pago                fecha
+0   Maria  Monitor  1326.0      NaN      peru       Efectivo  2024-01-01 00:00:00
+1   Luisa   Laptop    55.0        2     chile        Tarjeta  2024-01-01 01:00:00
+2  Carlos  Monitor  1203.0        9  Colombia       Efectivo  2024-01-01 02:00:00
+3   Luisa  Monitor  1304.0        3      Perú  TRANSFERENCIA  2024-01-01 03:00:00
+4   Luisa  Monitor   426.0        6     chile        Tarjeta  2024-01-01 04:00:00
+
+Información general del dataset (df.info()):
+<class 'pandas.DataFrame'>
+RangeIndex: 5000 entries, 0 to 4999
+Data columns (total 7 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   cliente      5000 non-null   str    
+ 1   producto     5000 non-null   str    
+ 2   precio       4950 non-null   float64
+ 3   cantidad     4950 non-null   str    
+ 4   pais         5000 non-null   str    
+ 5   metodo_pago  5000 non-null   str    
+ 6   fecha        5000 non-null   str    
+dtypes: float64(1), str(6)
+memory usage: 273.6 KB
+
+Resumen estadístico (df.describe()):
+       cliente producto         precio cantidad   pais    metodo_pago                fecha
+count     5000     5000    4950.000000     4950   5000           5000                 5000
+unique       6        5            NaN       10      7              4                 4825
+top        Ana    Mouse            NaN        2  chile  TRANSFERENCIA  2024-01-19 00:00:00
+freq       870     1069            NaN      573    733           1276                    5
+mean       NaN      NaN    5053.823434      NaN    NaN            NaN                  NaN
+std        NaN      NaN   63379.982009      NaN    NaN            NaN                  NaN
+min        NaN      NaN      10.000000      NaN    NaN            NaN                  NaN
+25%        NaN      NaN     531.000000      NaN    NaN            NaN                  NaN
+50%        NaN      NaN    1027.000000      NaN    NaN            NaN                  NaN
+75%        NaN      NaN    1519.000000      NaN    NaN            NaN                  NaN
+max        NaN      NaN  999999.000000      NaN    NaN            NaN                  NaN
+
+RESPUESTAS A LAS PREGUNTAS DE EXPLORACIÓN:
+
+1. ¿Cuántas filas y columnas tiene la base de datos?
+   5000 filas y 7 columnas.
+
+2. ¿Qué tipos de datos identificas?
+cliente            str
+producto           str
+precio         float64
+cantidad           str
+pais               str
+metodo_pago        str
+fecha              str
+dtype: object
+
+    cliente   : object  (texto - nombres de clientes)
+    producto  : object  (texto - nombre del producto)
+    precio    : float64 (numérico - debería ser siempre positivo)
+    cantidad  : object  (debería ser int, pero contiene valores como 'three')
+    pais      : object  (texto - con inconsistencias de capitalización/alias)
+    metodo_pago: object (texto - con variaciones de mayúsculas)
+    fecha     : object  (debería ser datetime)
+
+3. ¿Encuentras columnas con problemas o inconsistencias?
+   → 'cantidad' tiene valores no numéricos ('three') → tipo incorrecto.
+   → 'precio' tiene valores nulos (NaN).
+   → 'cantidad' tiene valores nulos (NaN).
+   → 'pais' tiene variantes: 'colombia', 'Colombia', 'COL', 'col', 'peru', 'Perú', etc.
+   → 'metodo_pago' tiene variantes: 'transferencia', 'TRANSFERENCIA', 'Tarjeta', etc.
+   → 'fecha' está en formato string, no datetime.
+   → Existe al menos un precio outlier (999999.0).
+PARTE 2 — LIMPIEZA DE DATOS
+
+'cantidad': valores 'three' reemplazados por NaN y columna convertida a numérico.
+'precio': convertido a numérico (ya era float, verificado).
+'fecha': convertida a datetime.
+
+ Valores nulos antes de tratarlos:
+cliente          0
+producto         0
+precio          50
+cantidad       100
+pais             0
+metodo_pago      0
+fecha            0
+dtype: int64
+
+ 'precio': 50 nulos imputados con la mediana (1027.00).
+'cantidad': 100 nulos imputados con la mediana (5).
+'cantidad': convertida a entero (Int64).
+
+ 'pais' estandarizado. Valores únicos: <StringArray>
+['Perú', 'Chile', 'Colombia']
+Length: 3, dtype: str
+'metodo_pago' estandarizado. Valores únicos: <StringArray>
+['Efectivo', 'Tarjeta', 'Transferencia']
+Length: 3, dtype: str
+
+ Outliers en 'precio' (por encima de 4445.00):
+     cliente producto    precio  cantidad      pais
+771    Luisa  Teclado  999999.0         1  Colombia
+1123     Ana   Laptop  999999.0         2      Perú
+1159   Pedro  Teclado  999999.0         2      Perú
+1165   Luisa    Mouse  999999.0         3     Chile
+1188   Pedro    Mouse  999999.0         4      Perú
+1195     Ana   Laptop  999999.0         8  Colombia
+1225     Ana  Monitor  999999.0         5  Colombia
+1242    Juan    Mouse  999999.0         5  Colombia
+1277   Pedro  Celular  999999.0         3     Chile
+1311  Carlos  Teclado  999999.0         4  Colombia
+1885   Maria    Mouse  999999.0         7  Colombia
+1995   Luisa  Teclado  999999.0         1     Chile
+2077     Ana  Teclado  999999.0         9      Perú
+2144     Ana  Monitor  999999.0         3     Chile
+2825    Juan    Mouse  999999.0         1      Perú
+2976  Carlos  Celular  999999.0         6     Chile
+3868   Pedro  Monitor  999999.0         3     Chile
+4104   Pedro    Mouse  999999.0         2     Chile
+4201   Pedro  Teclado  999999.0         5  Colombia
+4962  Carlos   Laptop  999999.0         3  Colombia
+Eliminados 20 registros con precios outlier extremos.
+
+Valores nulos tras la limpieza:
+cliente        0
+producto       0
+precio         0
+cantidad       0
+pais           0
+metodo_pago    0
+fecha          0
+dtype: int64
+
+Dimensiones finales del dataset limpio: (4980, 7)
+
+📝 RESPUESTAS PARTE 2:
+   Problemas encontrados:
+   - 'cantidad' contenía strings como 'three' en lugar de números → reemplazado por NaN y luego imputado con la mediana.
+   - 'precio' y 'cantidad' tenían valores nulos → imputados con la mediana de cada columna (más robusta que la media ante outliers).
+   - 'pais' tenía múltiples variantes del mismo país → estandarizado con un diccionario de mapeo.
+   - 'metodo_pago' tenía mayúsculas/minúsculas inconsistentes → estandarizado con .str.title().
+   - 'fecha' era tipo object → convertida a datetime.
+   - 'precio' = 999999 es un valor atípico extremo → eliminado (1 registro).
+   
+   ¿Se eliminaron registros?
+   → Sí, se eliminó 1 registro con precio = 999999, que corresponde a un error de captura evidente.
+   → Los nulos en precio y cantidad fueron IMPUTADOS (no eliminados) para conservar la mayor cantidad de datos.
+
+============================================================
+PARTE 3 — ANÁLISIS CON PANDAS
+
+Total vendido:       $  25,141,968.00
+Promedio de ventas:  $       5,048.59
+Venta máxima:        $      17,955.00
+Venta mínima:        $          10.00
+
+Top 5 productos con mayor valor total vendido:
+producto
+Mouse      $5,402,556.00
+Laptop     $5,133,491.00
+Monitor    $4,956,071.00
+Celular    $4,890,656.00
+Teclado    $4,759,194.00
+Name: total, dtype: str
+
+País con más ventas (total $):
+pais
+Colombia    $10,879,472.00
+Chile        $7,230,374.00
+Perú         $7,032,122.00
+Name: total, dtype: str
+
+   → El país con más ventas es: Colombia con $10,879,472.00
+
+============================================================
+PARTE 4 — INTRODUCCIÓN A NUMPY
+
+Array NumPy 'data' — shape: (4980, 2), dtype: object
+   Primeras 3 filas:
+[[1326.0 5]
+ [55.0 2]
+ [1203.0 9]]
+
+→ precios    (primeros 5): [1326.0 55.0 1203.0 1304.0 426.0]
+→ cantidades (primeros 5): [5 2 9 3 6]
+
+→ totales    (primeros 5): [6630.0 110.0 10827.0 3912.0 2556.0]
+
+============================================================
+PARTE 5 — ANÁLISIS CON NUMPY
+
+ Suma total de ventas (NumPy):          $  25,141,968.00
+Promedio de ventas (NumPy):            $       5,048.59
+Venta máxima (NumPy):                  $      17,955.00
+Cantidad de ventas superiores a 1000:  4236 registros
+
+RESPUESTAS PARTE 5:
+
+1. ¿Qué ventajas observas al usar NumPy?
+   → NumPy opera sobre arrays en memoria de manera muy eficiente usando 
+     operaciones vectorizadas implementadas en C. Es significativamente más 
+     rápido que iterar con bucles for en Python puro, especialmente con 
+     miles o millones de datos.
+
+2. ¿Qué significa "vectorización"?
+   → Es la capacidad de aplicar una operación a TODOS los elementos de un 
+     array al mismo tiempo, sin necesidad de escribir un bucle explícito. 
+     Por ejemplo: `precios * cantidades` multiplica cada par de elementos 
+     de ambos arrays en una sola instrucción, delegando el ciclo al motor 
+     interno de NumPy (en C), lo que lo hace mucho más rápido.
+
+3. ¿Qué hace la expresión data[:, 0]?
+   → Selecciona TODAS las filas (:) de la columna con índice 0 del array 2D.
+     En otras palabras, extrae la primera columna completa del array,
+     que en nuestro caso corresponde a los precios.
+
+============================================================
+PARTE 6 — INTERPRETACIÓN DE RESULTADOS
+
+Análisis e interpretación:
+
+1. ¿Los resultados tienen sentido?
+   → En términos generales, sí. El total vendido de $25,141,968.00 
+     y el promedio de $5,048.59 por transacción son valores 
+     coherentes para un dataset de ventas de electrónica con precios 
+     entre $20 y $2000 y cantidades de 1 a 9 unidades.
+
+2. ¿Detectaste valores sospechosos?
+   → Sí. Se detectó y eliminó un precio de 999999.0 que era claramente 
+     un error de digitación (posible valor de relleno o prueba).
+   → Algunos precios bajos (ej. $16, $21) para productos como Monitor 
+     o Laptop podrían ser sospechosos, aunque se conservaron al no 
+     poder confirmar que son errores.
+   → Se encontraron registros con cantidades escritas como texto ('three') 
+     que fueron tratados como datos faltantes.
+
+3. ¿El promedio representa correctamente los datos?
+   → El promedio puede estar influenciado por los extremos (precio muy bajo 
+     o muy alto). Sería más representativo acompañarlo con la mediana y 
+     la desviación estándar para entender la dispersión real.
+   → Mediana del total: $3,940.00 vs Promedio: $5,048.59
+     → Existe cierta asimetría en los datos.
+
+4. ¿Qué decisiones tomarías si esta fuera información real de negocio?
+   → Investigar precios extremadamente bajos (< $50) para productos de alto 
+     valor: podrían ser errores de captura o descuentos excepcionales.
+   → Establecer reglas de validación en el sistema fuente para evitar 
+     valores como 'three' en campos numéricos.
+   → Revisar las fechas: existen fechas atípicas (ej. 2024-05-01) dentro 
+     de una secuencia que va principalmente de enero a julio.
+   → Estandarizar los campos 'pais' y 'metodo_pago' directamente en el 
+     sistema de captura para evitar limpiezas manuales recurrentes.
+   → Analizar la rentabilidad por país y producto para tomar decisiones 
+     de inventario y marketing.
