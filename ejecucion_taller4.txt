@@ -1,0 +1,95 @@
+================================================================================
+PARTE 2 - EXPLORACION DE DATOS (EDA)
+================================================================================
+
+Dimension del dataset: 205 filas x 26 columnas
+
+Valores nulos por columna:
+  No se encontraron valores nulos en el dataset.
+
+Variables numericas (14):
+['symboling', 'wheelbase', 'carlength', 'carwidth', 'carheight', 'curbweight', 'enginesize', 'boreratio', 'stroke', 'compressionratio', 'horsepower', 'peakrpm', 'citympg', 'highwaympg']
+
+Variables categoricas (10):
+['CarName', 'fueltype', 'aspiration', 'doornumber', 'carbody', 'drivewheel', 'enginelocation', 'enginetype', 'cylindernumber', 'fuelsystem']
+
+Variable objetivo: 'price'
+count      205.000000
+mean     13276.710571
+std       7988.852332
+min       5118.000000
+25%       7788.000000
+50%      10295.000000
+75%      16503.000000
+max      45400.000000
+Name: price, dtype: float64
+
+Se generaron 4 graficos en la carpeta 'graficas_taller4/':
+  01_distribucion_precio.png
+  02_matriz_correlacion.png
+  03_enginesize_vs_price.png
+  04_precio_por_carroceria.png
+
+================================================================================
+PARTE 3 - PREPARACION DE DATOS
+================================================================================
+
+Variables predictoras (X): 24 columnas
+Variable objetivo (y): 'price'
+Numero de registros: 205
+
+Conjunto de entrenamiento: 164 registros (80%)
+Conjunto de prueba:        41 registros (20%)
+
+================================================================================
+PARTE 4 - MODELADO
+================================================================================
+
+Entrenando modelo: Regresion Lineal ...
+  Regresion Lineal entrenado correctamente.
+
+Entrenando modelo: Random Forest ...
+  Random Forest entrenado correctamente.
+
+================================================================================
+PARTE 5 - EVALUACION DEL MODELO
+================================================================================
+
+Modelo: Regresion Lineal
+  MAE  (Error Absoluto Medio):        1,807.70
+  MSE  (Error Cuadratico Medio):       7,808,716.04
+  RMSE (Raiz del Error Cuad. Medio):   2,794.41
+  R2   (Coef. de determinacion):       0.9011
+
+Modelo: Random Forest
+  MAE  (Error Absoluto Medio):        1,268.34
+  MSE  (Error Cuadratico Medio):       3,284,767.20
+  RMSE (Raiz del Error Cuad. Medio):   1,812.39
+  R2   (Coef. de determinacion):       0.9584
+
+Mejor modelo segun R2: Random Forest
+Grafico guardado en: graficas_taller4/05_real_vs_predicho.png
+
+Tabla comparativa de metricas:
+          Modelo     MAE        MSE    RMSE     R2
+Regresion Lineal 1807.70 7808716.04 2794.41 0.9011
+   Random Forest 1268.34 3284767.20 1812.39 0.9584
+
+Top 10 variables mas influyentes en la prediccion del precio:
+  variable  importancia
+enginesize     0.575757
+curbweight     0.270974
+highwaympg     0.041868
+horsepower     0.029630
+  carwidth     0.012298
+ carlength     0.008874
+ wheelbase     0.007048
+ marca_bmw     0.006968
+   citympg     0.006632
+ boreratio     0.005669
+
+Grafico guardado en: graficas_taller4/06_importancia_variables.png
+
+================================================================================
+PROCESO FINALIZADO. Revisa la carpeta '{OUTPUT_DIR}/' para ver todas las visualizaciones.
+================================================================================
