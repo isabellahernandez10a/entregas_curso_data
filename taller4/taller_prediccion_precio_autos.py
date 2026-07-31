@@ -44,7 +44,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Carpeta donde se guardaran las graficas generadas por el script
-OUTPUT_DIR = "graficas"
+OUTPUT_DIR = "graficas_taller4"
 import os
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -555,7 +555,7 @@ def main():
     importancia_variables(mejor_pipeline, mejor_nombre, columnas_numericas, columnas_categoricas_final)
 
     print("\n" + "=" * 80)
-    print("PROCESO FINALIZADO. Revisa la carpeta 'graficas/' para ver todas las visualizaciones.")
+    print("PROCESO FINALIZADO. Revisa la carpeta '{OUTPUT_DIR}/' para ver todas las visualizaciones.")
     print("=" * 80)
 
     return tabla_resultados
@@ -564,3 +564,4 @@ def main():
 if __name__ == "__main__":
     main()
 
+ 
