@@ -1,0 +1,5 @@
+cluster,n_games_purchased,n_games_played,total_hours,avg_hours_per_game,max_hours_single_game,engagement_ratio,n_usuarios,% del total,segmento
+0,1.52,1.38,6.29,4.75,5.54,0.97,5049,40.7,Jugadores Casuales
+1,56.09,30.4,1168.35,56.24,536.31,0.63,1765,14.2,Coleccionistas Muy Activos
+2,3.9,2.38,386.32,227.88,345.51,0.77,3486,28.1,Usuarios Muy Activos (Hardcore)
+3,4.08,0.74,2.28,1.63,2.0,0.16,2093,16.9,Compradores Ocasionales / Pasivos
