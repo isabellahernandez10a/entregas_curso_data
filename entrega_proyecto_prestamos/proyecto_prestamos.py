@@ -32,20 +32,16 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 # ---------------------------------------------------------------------------
 # 1. Carga y comprensión de los datos
 # ---------------------------------------------------------------------------
-CARPETA_PROYECTO = Path(__file__).resolve().parent
-posibles_rutas = [
-    CARPETA_PROYECTO / "loan_approval_dataset.csv",
-    CARPETA_PROYECTO.parent / "loan_approval_dataset.csv",
-    Path(r"C:\Users\Isabella\Downloads\loan_approval_dataset.csv"),
-]
-RUTA_CSV = next((ruta for ruta in posibles_rutas if ruta.exists()), posibles_rutas[0])
+RUTA_CSV = Path("loan_approval_dataset.csv")
+if not RUTA_CSV.exists():
+    RUTA_CSV = Path(r"C:\Users\Isabella\Downloads\loan_approval_dataset.csv")
 
 if not RUTA_CSV.exists():
     raise FileNotFoundError(
         "No se encontró loan_approval_dataset.csv. Copia el CSV en esta carpeta."
     )
 
-CARPETA_GRAFICOS = CARPETA_PROYECTO / "graficos"
+CARPETA_GRAFICOS = Path("graficos")
 CARPETA_GRAFICOS.mkdir(exist_ok=True)
 sns.set_theme(style="whitegrid", palette="deep")
 
