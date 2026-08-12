@@ -34,7 +34,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 # ---------------------------------------------------------------------------
 RUTA_CSV = Path("loan_approval_dataset.csv")
 if not RUTA_CSV.exists():
-    RUTA_CSV = Path(r"C:\Users\Isabella\Downloads\loan_approval_dataset.csv")
+    RUTA_CSV = Path(r"C:\Users\Isabella\Desktop\entregas_curso\entrega_proyecto_prestamos\loan_approval_dataset.csv")
 
 if not RUTA_CSV.exists():
     raise FileNotFoundError(
@@ -58,6 +58,30 @@ print(f"Valores nulos totales: {df.isna().sum().sum()}")
 print(f"Filas duplicadas: {df.duplicated().sum()}")
 print("\nDistribución de la variable objetivo:")
 print(df["loan_status"].value_counts())
+
+# Valores negativos en activos residenciales
+valores_negativos = (df["residential_assets_value"] < 0).sum()
+print(f"\nValores negativos en activos residenciales: {valores_negativos}")
+
+# Detección de valores atípicos con el método IQR
+print("\nVALORES ATÍPICOS (método IQR)")
+columnas_numericas = df.select_dtypes(include="number").columns.drop("loan_id")
+
+for columna in columnas_numericas:
+    q1 = df[columna].quantile(0.25)
+    q3 = df[columna].quantile(0.75)
+    iqr = q3 - q1
+
+    limite_inferior = q1 - 1.5 * iqr
+    limite_superior = q3 + 1.5 * iqr
+
+    cantidad_atipicos = (
+        (df[columna] < limite_inferior)
+        | (df[columna] > limite_superior)
+    ).sum()
+
+    if cantidad_atipicos > 0:
+        print(f"{columna}: {cantidad_atipicos} valores atípicos")
 
 
 # ---------------------------------------------------------------------------
