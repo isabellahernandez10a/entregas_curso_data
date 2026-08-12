@@ -1,0 +1,32 @@
+=================================================================
+PROYECTO: PREDICCIÓN DE APROBACIÓN DE PRÉSTAMOS
+=================================================================
+
+Dimensiones del dataset: 4269 filas y 13 columnas
+Valores nulos totales: 0
+Filas duplicadas: 0
+
+Distribución de la variable objetivo:
+loan_status
+Approved    2656
+Rejected    1613
+Name: count, dtype: int64
+
+Promedio del puntaje CIBIL por estado:
+loan_status
+Approved    703.5
+Rejected    429.5
+Name: cibil_score, dtype: float64
+
+Entrenamiento: 3415 registros | Prueba: 854 registros
+
+COMPARACIÓN DE MODELOS
+                     Accuracy  Precision  Recall     F1  ROC-AUC
+Modelo                                                          
+Regresión logística     0.915      0.921   0.944  0.932    0.973
+Bosque aleatorio        0.980      0.985   0.983  0.984    0.999
+
+CONCLUSIÓN
+El bosque aleatorio fue el mejor modelo. El puntaje CIBIL fue la variable más importante para predecir la aprobación.
+
+Gráficos guardados en: C:\Users\Isabella\Desktop\entregas_curso\entrega_proyecto_prestamos\graficos
